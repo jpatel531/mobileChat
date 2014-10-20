@@ -51,11 +51,10 @@ angular.module('starter', ['ionic',
           templateUrl: "views/chat.html",
           controller: "ChatCtrl"       
         }
+      },
+      data: {
+        requiresLogin: true
       }
-      // },
-      // data: {
-      //   requiresLogin: true
-      // }
 
     });
 
@@ -97,5 +96,5 @@ angular.module('starter', ['ionic',
     }
 
   });
-});
+})
 

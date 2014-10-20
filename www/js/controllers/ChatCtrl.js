@@ -1,4 +1,6 @@
-angular.module('starter').controller('ChatCtrl', ['$scope', '$http', '$pusher', function($scope, $http, $pusher){
+angular.module('starter').controller('ChatCtrl', ['$scope', '$http', '$pusher', 'auth', function($scope, $http, $pusher, auth){
+
+  $scope.auth = auth
 
   // Pusher setup
 
@@ -6,7 +8,7 @@ angular.module('starter').controller('ChatCtrl', ['$scope', '$http', '$pusher', 
   var pusher = $pusher(client);
   var channel = pusher.subscribe('chat-channel');
 
-  $scope.message = {} 
+  $scope.message = {from: $scope.auth.profile.nickname} 
   $scope.messages = []
 
   channel.bind('new-message', function(message){

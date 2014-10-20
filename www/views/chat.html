@@ -1,9 +1,8 @@
 <!-- <ion-content ng-controller="ChatCtrl"> -->
 <ion-view>
-  <label class="item item-input">
-    <textarea ng-model="message.from" placeholder="Your Name">
-    </textarea>
-  </label>
+
+  Hi, {{auth.profile.nickname}}
+
 
   <div ng-repeat="message in messages">
     <h5>{{message.from}}
