@@ -18,28 +18,30 @@ angular.module('starter', ['ionic', 'pusher-angular'])
   });
 })
 
-angular.module('starter').controller('ChatCtrl', ['$scope', '$http', '$pusher', function($scope, $http, $pusher){
+.config(function($stateProvider, $urlRouterProvider){
 
-  // Pusher setup
+  $stateProvider
 
-  var client = new Pusher('b71aabfe931fe51bd8ad');
-  var pusher = $pusher(client);
-  var channel = pusher.subscribe('chat-channel');
+    .state('sign_in',{
+      url: "/sign_in",
+      views: {
+        'sign_in': {
+          templateUrl: "views/sign_in.html",
+          controller: "LoginCtrl"  
+        }
+      }
+    })
 
-  $scope.message = {} 
-  $scope.messages = []
+    .state('chat', {
+      url: "/chat",
+      views: {
+        "chat": {
+          templateUrl: "views/chat.html",
+          controller: "ChatCtrl"       
+        }
+      }
+    });
 
-  channel.bind('new-message', function(message){
-    $scope.messages.push(message)
-  });
+    $urlRouterProvider.otherwise('/sign_in')
 
-  $scope.sendMessage = function(event){
-    if (event.keyCode === 13) {
-      $scope.message.timestamp = new Date();
-      $http.post('http://localhost:3000/messages', $scope.message).success(function(data){ 
-        $scope.message.body = ""
-      })
-    }
-  };
-  
-}]);
+});
