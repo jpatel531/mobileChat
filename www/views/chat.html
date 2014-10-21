@@ -1,17 +1,19 @@
 <!-- <ion-content ng-controller="ChatCtrl"> -->
 <ion-view>
 
-  Hi, {{auth.profile.nickname}}
 
+  <!-- <div class="bar bar-header bar-calm"> -->
+    <h1 class="title">Hi, {{auth.profile.nickname}}</h1>
+  <!-- </div> -->
 
-  <div ng-repeat="message in messages">
+  <ul class="list">
+  <li class="item" ng-repeat="message in messages">
     <h5>{{message.from}}
     </h5>
 
     <p>{{message.body}}</p>
     <small>{{message.timestamp | date:'short'}}</small>
-  </div>
-
+  </ul>
 
 
   <label class="item item-input">

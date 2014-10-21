@@ -86,12 +86,13 @@ angular.module('starter', ['ionic',
   }
 
   $httpProvider.interceptors.push('jwtInterceptor');
-}).run(function($rootScope, auth, store) {
+}).run(function($rootScope, auth, store, $http) {
   $rootScope.$on('$locationChangeStart', function() {
     if (!auth.isAuthenticated) {
       var token = store.get('token');
       if (token) {
         auth.authenticate(store.get('profile'), token);
+        $http.post('http://localhost:3000/presence/new_signup', store.get('profile'));
       }
     }
 
