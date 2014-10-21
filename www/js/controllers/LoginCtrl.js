@@ -9,8 +9,6 @@ angular.module('starter').controller('LoginCtrl', function($scope, auth, $state,
   $scope.chatWith = function(email){
   	$http.post('http://localhost:3000/chat/new', {users: [$scope.members.me.info.email, email]}).success(function(data){
   		var path = "chat/" + data.join("/");
-  		// console.log(path);
-  		// $state.go(path);
   		$location.url(path);
   	})
   };
