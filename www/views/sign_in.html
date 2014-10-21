@@ -1,9 +1,16 @@
 <ion-view>
 <ion-content>
 
-	{{members.count}}
-	{{members.members}}
-  <!-- The content of the page -->
+	<!-- {{members.me.info.email}} -->
+
+  <ul>
+  	<li ng-repeat="member in members.members | excludeThis:members.me">
+  		<p>{{member.nickname}} is online</p>
+  		{{member.id}}
+  		<a href="#" ng-click="chatWith(member.email)">Chat with {{member.email}}</a>
+  	</li>
+
+  </ul>
 
 </ion-content>
 </ion-view>

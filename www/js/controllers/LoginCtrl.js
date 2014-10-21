@@ -1,4 +1,4 @@
-angular.module('starter').controller('LoginCtrl', function($scope, auth, $state, store, $http, $pusher) {
+angular.module('starter').controller('LoginCtrl', function($scope, auth, $state, store, $http, $pusher, $location) {
   
   var client = new Pusher('b71aabfe931fe51bd8ad', {authEndpoint: 'http://localhost:3000/presence/auth'});
   var pusher = $pusher(client);
@@ -6,40 +6,21 @@ angular.module('starter').controller('LoginCtrl', function($scope, auth, $state,
 
   $scope.members = presenceChannel.members
 
-  // presenceChannel.bind('pusher:subscription_succeeded', function(members){
-  // 	console.log(members);
-  // 	$scope.$apply(function(){
-  // 		$scope.members = members
-  // 		$scope.members.count = members.count
-  // 	});
-  // });
-
- //  presenceChannel.bind('pusher:member_added', function(member) {
-	//   $scope.$apply(function() {
-	//     $scope.members.count = $scope.members.count;
-	//   });
-	// });
-
-	// presenceChannel.bind('pusher:member_removed', function(member) {
-	//   $scope.$apply(function() {
-	//      $scope.members.count = $scope.members.count;
-	//   });
-	// });
-
-  // $scope.members = presenceChannel.members
-
-  // console.log(presenceChannel.members)
-
+  $scope.chatWith = function(email){
+  	$http.post('http://localhost:3000/chat/new', {users: [$scope.members.me.info.email, email]}).success(function(data){
+  		var path = "chat/" + data.join("/");
+  		// console.log(path);
+  		// $state.go(path);
+  		$location.url(path);
+  	})
+  };
 
 
   if (!auth.isAuthenticated) {
 
 	  auth.signin({
 	    popup: true,
-	    // Make the widget non closeable
 	    standalone: true,
-	    // This asks for the refresh token
-	    // So that the user never has to log in again
 	    authParams: {
 	      scope: 'openid offline_access'
 	    }
@@ -49,14 +30,7 @@ angular.module('starter').controller('LoginCtrl', function($scope, auth, $state,
 		    store.set('profile', profile);
 		    store.set('token', idToken);
 		    store.set('refreshToken', refreshToken);
-		    $state.go('chat');	
 	  	});
-
-	  	// POST TO PRESENCE 
-
-
-
-	    // console.log(profile)
 
 	  }, function(error) {
 	    console.log("There was an error logging in", error);
@@ -65,4 +39,13 @@ angular.module('starter').controller('LoginCtrl', function($scope, auth, $state,
 
 
 
-})
+});
+
+angular.module('starter').filter('excludeThis', function(){
+
+	return function(members, me){
+		delete members[me.id]
+		return members
+	}
+
+});

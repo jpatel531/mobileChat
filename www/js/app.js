@@ -44,8 +44,8 @@ angular.module('starter', ['ionic',
       }
     })
 
-    .state('chat', {
-      url: "/chat",
+    .state('chat/:firstUser/:secondUser', {
+      url: "/chat/:firstUser/:secondUser",
       views: {
         "chat": {
           templateUrl: "views/chat.html",
@@ -58,7 +58,7 @@ angular.module('starter', ['ionic',
 
     });
 
-    $urlRouterProvider.otherwise('/sign_in')
+    // $urlRouterProvider.otherwise('/sign_in')
 
 
   // Configure Auth0
