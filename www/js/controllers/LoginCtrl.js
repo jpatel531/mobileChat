@@ -4,24 +4,27 @@ angular.module('starter').controller('LoginCtrl', function($scope, auth, $state,
   var pusher = $pusher(client);
   var presenceChannel = pusher.subscribe('presence-users');
 
-  presenceChannel.bind('pusher:subscription_succeeded', function(members){
-  	$scope.$apply(function(){
-  		$scope.members = members
-  		$scope.members.count = members.count
-  	});
-  });
+  $scope.members = presenceChannel.members
 
-  presenceChannel.bind('pusher:member_added', function(member) {
-	  $scope.$apply(function() {
-	    $scope.members.count = $scope.members.count;
-	  });
-	});
+  // presenceChannel.bind('pusher:subscription_succeeded', function(members){
+  // 	console.log(members);
+  // 	$scope.$apply(function(){
+  // 		$scope.members = members
+  // 		$scope.members.count = members.count
+  // 	});
+  // });
 
-	presenceChannel.bind('pusher:member_removed', function(member) {
-	  $scope.$apply(function() {
-	     $scope.members.count = $scope.members.count;
-	  });
-	});
+ //  presenceChannel.bind('pusher:member_added', function(member) {
+	//   $scope.$apply(function() {
+	//     $scope.members.count = $scope.members.count;
+	//   });
+	// });
+
+	// presenceChannel.bind('pusher:member_removed', function(member) {
+	//   $scope.$apply(function() {
+	//      $scope.members.count = $scope.members.count;
+	//   });
+	// });
 
   // $scope.members = presenceChannel.members
 
